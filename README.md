@@ -50,10 +50,10 @@ Future<void> getMetadata() async {
 
 ## 🖼 Example
 
-You may checkout example app for this plugin [here](https://github.com/alexmercerind/media_metadata_retriever/tree/master/example/lib/main.dart);
-
-![https://github.com/alexmercerind/media_metadata_retriever/tree/master/screenshots/sreenshot0.png]
-![https://github.com/alexmercerind/media_metadata_retriever/tree/master/screenshots/sreenshot1.png]
+You may checkout example app for this plugin [here](https://github.com/alexmercerind/media_metadata_retriever/tree/master/example/lib/main.dart).
+|||
+|-|-|
+|![](https://github.com/alexmercerind/media_metadata_retriever/blob/master/screenshots/screenshot0.png)|![](https://github.com/alexmercerind/media_metadata_retriever/blob/master/screenshots/screenshot1.png)|
 
 
 ## ✔ Progress
@@ -67,4 +67,4 @@ You may checkout example app for this plugin [here](https://github.com/alexmerce
 
 ## 🧷 How?
 
-Well, [MediaMetadataRetriever](https://developer.android.com/reference/android/media/MediaMetadataRetriever) on Android does the job.
+[MediaMetadataRetriever](https://developer.android.com/reference/android/media/MediaMetadataRetriever) on Android does the job. Pretty easy right?
