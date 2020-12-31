@@ -3,9 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 
-
 final MethodChannel methodChannel = MethodChannel('media_metadata_retriever');
-
 
 class Metadata {
   final String title;
@@ -22,9 +20,21 @@ class Metadata {
   final String filePath;
   final String mimeType;
 
-  Metadata({this.title, this.album, this.artists, this.year, this.trackNumber, this.albumLength, this.albumArtist, this.genre, this.author, this.writer, this.discNumber, this.filePath, this.mimeType});
+  Metadata(
+      {this.title,
+      this.album,
+      this.artists,
+      this.year,
+      this.trackNumber,
+      this.albumLength,
+      this.albumArtist,
+      this.genre,
+      this.author,
+      this.writer,
+      this.discNumber,
+      this.filePath,
+      this.mimeType});
 }
-
 
 class MediaMetadataRetriever {
   File _mediaFile;
@@ -41,8 +51,7 @@ class MediaMetadataRetriever {
       this.albumArt = await methodChannel.invokeMethod('getAlbumArt');
       this.duration = await methodChannel.invokeMethod('getDuration');
       this.bitrate = await methodChannel.invokeMethod('getBitrate');
-    }
-    else {
+    } else {
       throw 'ERROR: Media file does not exist.';
     }
   }
