@@ -1,21 +1,8 @@
 # [media_metadata_retriever](https://github.com/alexmercerind/media_metadata_retriever)
 
-A simple Flutter plugin for reading 🔖 metadata of 🎞 media files.
+A simple Flutter plugin for reading :bookmark: metadata of :musical_note: media files.
 
-## 💾 Install
-
-Mention in pubspec.yaml
-```yaml
-dependencies:
-  ...
-  media_metadata_retriever: ^0.0.1+1
-```
-Fetch the plugin from pub.dev
-```
-flutter pub get
-```
-
-## 📐 Usage
+## :triangular_ruler: Usage
 
 ```dart
 import 'package:media_metadata_retriever/media_metadata_retriever.dart';
@@ -48,15 +35,17 @@ Future<void> getMetadata() async {
 }
 ```
 
-## 🖼 Example
+## :iphone: Example
 
 You may checkout example app for this plugin [here](https://github.com/alexmercerind/media_metadata_retriever/tree/master/example/lib/main.dart).
-|||
-|-|-|
-|![](https://github.com/alexmercerind/media_metadata_retriever/blob/master/screenshots/screenshot0.png)|![](https://github.com/alexmercerind/media_metadata_retriever/blob/master/screenshots/screenshot1.png)|
 
 
-## ✔ Progress
+|Screenshot 1                                                                                                   |Screenshot 2                                                                                       |
+|---------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+|![](https://github.com/alexmercerind/media_metadata_retriever/blob/master/screenshots/screenshot0.png?raw=true)|![](https://github.com/alexmercerind/media_metadata_retriever/blob/master/screenshots/screenshot1.png?raw=true)|
+
+
+## :heavy_check_mark: Progress
 
 |Platform|Status     |
 |--------|-----------|
@@ -65,6 +54,6 @@ You may checkout example app for this plugin [here](https://github.com/alexmerce
 |Windows |Now Working|
 
 
-## 🧷 How?
+## :safety_pin: How?
 
 [MediaMetadataRetriever](https://developer.android.com/reference/android/media/MediaMetadataRetriever) on Android does the job. Pretty easy right?
