@@ -38,12 +38,6 @@ public class MediaMetadataRetrieverPlugin implements FlutterPlugin, MethodCallHa
     else if (call.method.equals("getAlbumArt")) {
       result.success(this.metadataRetriever.getAlbumArt());
     }
-    else if (call.method.equals("getDuration")) {
-      result.success(this.metadataRetriever.getDuration());
-    }
-    else if (call.method.equals("getBitrate")) {
-      result.success(this.metadataRetriever.getBitrate());
-    }
     else {
       result.notImplemented();
     }
