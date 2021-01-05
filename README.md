@@ -8,30 +8,27 @@ A simple Flutter plugin for reading :bookmark: metadata of :musical_note: media 
 import 'package:media_metadata_retriever/media_metadata_retriever.dart';
 
 Future<void> getMetadata() async {
-    // Instantiate the MediaMetadataRetriever class
     final metadataRetriever = new MediaMetadataRetriever();
-    // Set media file path
-    await metadataRetriever.setFile(File('/storage/emulated/0/Music/music.aac'));
-
-    // Retrieve metadata
+    /* Set File path */
+    await metadataRetriever.setFile(new File('/storage/emulated/0/Music/music.aac'));
+    /* Access metadata */
     Metadata metadata = await metadataRetriever.metadata;
-
-    // Use the way you want
-    print(metadata.title);
-    print(metadata.album);
-    print(metadata.artists);
-    print(metadata.year);
+    print(metadata.trackName);
+    print(metadata.trackArtistNames);
+    print(metadata.albumName);
+    print(metadata.albumArtistName);
     print(metadata.trackNumber);
     print(metadata.albumLength);
-    print(metadata.albumArtist);
+    print(metadata.year);
     print(metadata.genre);
-    print(metadata.author);
-    print(metadata.writer);
+    print(metadata.authorName);
+    print(metadata.writerName);
     print(metadata.discNumber);
-    print(metadata.filePath);
     print(metadata.mimeType);
-    print(metadataRetriever.duration);
-    print(metadataRetriever.bitrate);
+    print(metadata.trackDuration);
+    print(metadata.bitrate);
+    /* Alternatively, you may convert to to a Map<String, dynamic> */
+    metadata.toMap();
 }
 ```
 

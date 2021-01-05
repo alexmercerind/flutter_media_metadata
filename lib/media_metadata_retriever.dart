@@ -3,76 +3,112 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 
-final MethodChannel methodChannel = MethodChannel('media_metadata_retriever');
+final MethodChannel _methodChannel = MethodChannel('media_metadata_retriever');
 
 class Metadata {
-  final String title;
-  final String album;
-  final String artists;
-  final String year;
-  final String trackNumber;
-  final String albumLength;
-  final String albumArtist;
+  final String trackName;
+  final List<dynamic> trackArtistNames;
+  final String albumName;
+  final String albumArtistName;
+  final int trackNumber;
+  final int albumLength;
+  final int year;
   final String genre;
-  final String author;
-  final String writer;
-  final String discNumber;
-  final String filePath;
+  final String authorName;
+  final String writerName;
+  final int discNumber;
   final String mimeType;
+  final int trackDuration;
+  final int bitrate;
 
-  Metadata(
-      {this.title,
-      this.album,
-      this.artists,
-      this.year,
-      this.trackNumber,
-      this.albumLength,
-      this.albumArtist,
-      this.genre,
-      this.author,
-      this.writer,
-      this.discNumber,
-      this.filePath,
-      this.mimeType});
+  /// ## Access Metadata as a Map
+  /// 
+  ///  You may use [toMap] method to get metadata in form of a `Map<String, dynamic>`.
+  /// 
+  ///     Map<String, dynamic> metadataMap = metadata.toMap();
+  /// 
+  Map<String, dynamic> toMap() {
+    return {
+      'trackName': this.trackName,
+      'trackArtistNames': this.trackArtistNames,
+      'albumName': this.albumName,
+      'albumArtistName': this.albumArtistName,
+      'trackNumber': this.trackNumber,
+      'albumLength': this.albumLength,
+      'year': this.year,
+      'genre': this.genre,
+      'authorName': this.authorName,
+      'writerName': this.writerName,
+      'discNumber': this.discNumber,
+      'mimeType': this.mimeType,
+      'trackDuration': this.trackDuration,
+      'bitrate': this.bitrate,
+    };
+  }
+
+  Metadata({
+    this.trackName,
+    this.trackArtistNames,
+    this.albumName,
+    this.albumArtistName,
+    this.trackNumber,
+    this.albumLength,
+    this.year,
+    this.genre,
+    this.authorName,
+    this.writerName,
+    this.discNumber,
+    this.mimeType,
+    this.trackDuration,
+    this.bitrate,
+  });
 }
 
-class MediaMetadataRetriever {
-  File _mediaFile;
-  Uint8List albumArt;
-  int duration;
-  int bitrate;
 
+class MediaMetadataRetriever {
+  Uint8List albumArt;
+
+  /// ## Set Media File Path
+  /// 
+  ///  Pass File as the parameter of [setFile] method to access its metadata.
+  /// 
+  ///     final metadataRetriever = new MediaMetadataRetriever();
+  ///     await metadataRetriever.setFile(new File('/storage/emulated/0/Music/music.aac'));
+  ///
   Future<void> setFile(File mediaFile) async {
-    this._mediaFile = mediaFile;
     if (await mediaFile.exists()) {
-      await methodChannel.invokeMethod('setFilePath', {
+      await _methodChannel.invokeMethod('setFilePath', {
         'filePath': mediaFile.path,
       });
-      this.albumArt = await methodChannel.invokeMethod('getAlbumArt');
-      this.duration = await methodChannel.invokeMethod('getDuration');
-      this.bitrate = await methodChannel.invokeMethod('getBitrate');
+      this.albumArt = await _methodChannel.invokeMethod('getAlbumArt');
     } else {
       throw 'ERROR: Media file does not exist.';
     }
   }
 
+  /// ## Access Metadata
+  /// 
+  ///  Access metadata of the media file loaded using [setFile] method.
+  /// 
+  ///     Metadata metadata = await metadataRetriever.metadata;
+  /// 
   Future<Metadata> get metadata async {
-    var metadata = await methodChannel.invokeMethod('getMetadata');
-    String trackNumber = metadata['trackNumber'] ?? '1';
+    var metadata = await _methodChannel.invokeMethod('getMetadata');
     return new Metadata(
-      title: metadata['title'],
-      album: metadata['album'],
-      artists: metadata['artists'],
+      trackName: metadata['trackName'],
+      trackArtistNames: metadata['trackArtistNames'],
+      albumName: metadata['albumName'],
+      albumArtistName: metadata['albumArtistName'],
+      trackNumber: metadata['trackNumber'],
+      albumLength: metadata['albumLength'],
       year: metadata['year'],
-      trackNumber: trackNumber.split('/').first,
-      albumLength: trackNumber.split('/').last,
-      albumArtist: metadata['albumArtist'],
       genre: metadata['genre'],
-      author: metadata['author'],
-      writer: metadata['writer'],
+      authorName: metadata['authorName'],
+      writerName: metadata['writerName'],
       discNumber: metadata['discNumber'],
-      filePath: this._mediaFile.path,
       mimeType: metadata['mimeType'],
+      trackDuration: metadata['trackDuration'],
+      bitrate: metadata['bitrate'],
     );
   }
 }
