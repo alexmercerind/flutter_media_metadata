@@ -48,7 +48,7 @@ You may checkout example app for this plugin [here](https://github.com/alexmerce
 |--------|-----------|
 |Android |Working    |
 |Linux   |Coming Soon|
-|Windows |Now Working|
+|Windows |Not Working|
 
 
 ## :safety_pin: How?
