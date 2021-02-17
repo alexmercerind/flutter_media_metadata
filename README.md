@@ -27,7 +27,7 @@ Future<void> getMetadata() async {
     print(metadata.mimeType);
     print(metadata.trackDuration);
     print(metadata.bitrate);
-    /* Alternatively, you may convert to to a Map<String, dynamic> */
+    /* Alternatively, you may convert it to a Map<String, dynamic> */
     metadata.toMap();
 }
 ```
