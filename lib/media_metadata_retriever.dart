@@ -80,7 +80,12 @@ class MediaMetadataRetriever {
       await _methodChannel.invokeMethod('setFilePath', {
         'filePath': mediaFile.path,
       });
-      this.albumArt = await _methodChannel.invokeMethod('getAlbumArt');
+      try{
+        this.albumArt = await _methodChannel.invokeMethod('getAlbumArt');
+        }
+      catch(e){
+        this.albumArt = null;
+      }
     } else {
       throw 'ERROR: Media file does not exist.';
     }
