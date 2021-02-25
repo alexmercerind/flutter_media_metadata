@@ -49,11 +49,11 @@ On debian based distros, run
 sudo apt install libmediainfo-dev
 ```
 
-## :blue_heart: Supporting
+## Supporting
 
 <a href="https://www.buymeacoffee.com/alexmercerind"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=alexmercerind&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"></a>
 
-## :iphone: Example
+## Example
 
 You may checkout example app for this plugin [here](https://github.com/alexmercerind/flutter_media_metadata/tree/master/example/lib/main.dart).
 
@@ -66,7 +66,7 @@ You may checkout example app for this plugin [here](https://github.com/alexmerce
 <img src="https://github.com/alexmercerind/flutter_media_metadata/blob/assets/linux.png?raw=true" height="500"></img>
 
 
-## :heavy_check_mark: Progress
+## Progress
 
 |Platform|Status     |
 |--------|-----------|
