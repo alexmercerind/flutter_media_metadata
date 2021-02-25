@@ -6,7 +6,7 @@ Flutter plugin for reading :bookmark: metadata of :musical_note: media files.
 
 ```yaml
 dependencies:
-  flutter_media_metadata: ^0.0.3
+  flutter_media_metadata: ^0.0.3+2
 ```
 
 ## Using

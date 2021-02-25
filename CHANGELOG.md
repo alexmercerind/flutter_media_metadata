@@ -1,3 +1,7 @@
+## 0.0.3+2
+
+- Update documentation.
+
 ## 0.0.3
 
 - [media_metadata_retriever](https://github.com/alexmercerind/flutter_media_metadata) is now [flutter_media_metadata](https://github.com/alexmercerind/media_metadata_retriever).
