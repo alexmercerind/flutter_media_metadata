@@ -7,20 +7,20 @@ import 'package:flutter/services.dart';
 final MethodChannel _methodChannel = MethodChannel('flutter_media_metadata');
 
 class Metadata {
-  final String trackName;
-  final List<dynamic> trackArtistNames;
-  final String albumName;
-  final String albumArtistName;
-  final int trackNumber;
-  final int albumLength;
-  final int year;
-  final String genre;
-  final String authorName;
-  final String writerName;
-  final int discNumber;
-  final String mimeType;
-  final int trackDuration;
-  final int bitrate;
+  final String? trackName;
+  final List<String>? trackArtistNames;
+  final String? albumName;
+  final String? albumArtistName;
+  final int? trackNumber;
+  final int? albumLength;
+  final int? year;
+  final String? genre;
+  final String? authorName;
+  final String? writerName;
+  final int? discNumber;
+  final String? mimeType;
+  final int? trackDuration;
+  final int? bitrate;
 
   /// ## Access Metadata as a Map
   ///
@@ -47,7 +47,7 @@ class Metadata {
     };
   }
 
-  Metadata({
+  const Metadata({
     this.trackName,
     this.trackArtistNames,
     this.albumName,
@@ -66,7 +66,7 @@ class Metadata {
 }
 
 class MetadataRetriever {
-  Uint8List albumArt;
+  Uint8List? albumArt;
 
   /// ## Set Media File Path
   ///
@@ -83,7 +83,7 @@ class MetadataRetriever {
       try {
         if (Platform.isLinux) {
           String albumArtBase64 =
-              await _methodChannel.invokeMethod('getAlbumArt');
+              await (_methodChannel.invokeMethod('getAlbumArt') as FutureOr<String>);
           this.albumArt = base64Decode(albumArtBase64);
         }
         if (Platform.isAndroid) {
@@ -104,7 +104,7 @@ class MetadataRetriever {
   ///     final metadataRetriever = new MediaMetadataRetriever();
   ///     await metadataRetriever.setFile(new Uri.https('www.example.com', '/audio.MP3', {}));
   ///
-  Future<void> setUri(dynamic uri, {Map<String, dynamic> headers}) async {
+  Future<void> setUri(Uri uri, {Map<String, dynamic>? headers}) async {
     if (Platform.isLinux) {
       throw UnimplementedError('Exception: Method not implemented on Linux.');
     }
@@ -136,7 +136,7 @@ class MetadataRetriever {
         if (value == '') metadata[key] = null;
       });
       if (metadata['trackArtistNames'] != null)
-        metadata['trackArtistNames'] = metadata['trackArtistNames'].split('/');
+        metadata['trackArtistNames'] = (metadata['trackArtistNames'] as String).split('/');
       if (metadata['trackNumber'] != null) {
         String trackNumber = metadata['trackNumber'];
         metadata['trackNumber'] = int.tryParse(trackNumber.split('/').first);

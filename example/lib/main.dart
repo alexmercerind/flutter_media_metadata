@@ -153,7 +153,7 @@ class _MyAppState extends State<MyApp> {
                   hintText: 'Enter path to a media file.',
                 ),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () => this.onSelected(this.mediaFilePath),
                 child: Text('LOAD FILE'),
               ),

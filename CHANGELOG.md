@@ -1,3 +1,8 @@
+## 0.1.0
+
+- Migrated to null-safety
+- `trackArtistNames` is now `List<String>` instead of `List<dynamic>`
+
 ## 0.0.3+2
 
 - Update documentation.
