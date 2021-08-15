@@ -22,18 +22,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#include <algorithm>
+#include <cstring>
 #include <string>
 #include <vector>
-#include <algorithm>
 
 #ifndef UTILS_HEADER
 #define UTILS_HEADER
 
-#define RM(x) \
-  \
-size -= (x);  \
-  \
-data += (x);
+#define RM(x)  \
+               \
+  size -= (x); \
+               \
+  data += (x);
 
 static inline uint32_t U32_AT(const void* data) {
   uint32_t x;
