@@ -1,158 +1,53 @@
 package com.alexmercerind.flutter_media_metadata;
-
 import android.media.MediaMetadataRetriever;
-import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.lang.System;
 
 public class MetadataRetriever extends MediaMetadataRetriever {
-    public MetadataRetriever() {
-        super();
-    }
+  public MetadataRetriever() {
+    super();
+  }
 
-    public void setFilePath(String filePath) {
-        this.setDataSource(filePath);
-    }
+  public void setFilePath(String filePath) {
+    this.setDataSource(filePath);
+  }
 
-    public void setUri(String uri, HashMap<String, String> headers) {
-        this.setDataSource(uri, headers);
+  public HashMap<String, Object> getMetadata() {
+    HashMap<String, Object> metadata = new HashMap<String, Object>();
+    metadata.put("trackName", this.extractMetadata(this.METADATA_KEY_TITLE));
+    metadata.put("trackArtistNames", this.extractMetadata(this.METADATA_KEY_ARTIST));
+    metadata.put("albumName", this.extractMetadata(this.METADATA_KEY_ALBUM));
+    metadata.put("albumArtistName", this.extractMetadata(this.METADATA_KEY_ALBUMARTIST));
+    String trackNumber = this.extractMetadata(this.METADATA_KEY_CD_TRACK_NUMBER);
+    try {
+      metadata.put("trackNumber", trackNumber.split("/")[0].trim());
+      metadata.put("albumLength", trackNumber.split("/")[trackNumber.split("/").length - 1].trim());
+    } catch (Exception error) {
+      metadata.put("trackNumber", null);
+      metadata.put("albumLength", null);
     }
+    String year = this.extractMetadata(this.METADATA_KEY_YEAR);
+    String date = this.extractMetadata(this.METADATA_KEY_DATE);
+    try {
+      metadata.put("year", Integer.parseInt(year.trim()));
+    } catch (Exception yearException) {
+      try {
+        metadata.put("year", date.split("-")[0].trim());
+      } catch (Exception dateException) {
+        metadata.put("year", null);
+      }
+    }
+    metadata.put("genre", this.extractMetadata(this.METADATA_KEY_GENRE));
+    metadata.put("authorName", this.extractMetadata(this.METADATA_KEY_AUTHOR));
+    metadata.put("writerName", this.extractMetadata(this.METADATA_KEY_WRITER));
+    metadata.put("discNumber", this.extractMetadata(this.METADATA_KEY_DISC_NUMBER));
+    metadata.put("mimeType", this.extractMetadata(this.METADATA_KEY_MIMETYPE));
+    metadata.put("trackDuration", this.extractMetadata(this.METADATA_KEY_DURATION));
+    metadata.put("bitrate", this.extractMetadata(this.METADATA_KEY_BITRATE));
+    return metadata;
+  }
 
-    public HashMap<String, Object> getMetadata() {
-        HashMap<String, Object> metadata = new HashMap<String, Object>();
-        String trackName = this.extractMetadata(this.METADATA_KEY_TITLE);
-        if (trackName != null) {
-            metadata.put("trackName", trackName);
-        }
-        else {
-            metadata.put("trackName", null);
-        }
-        String trackArtistNames = this.extractMetadata(this.METADATA_KEY_ARTIST);
-        if (trackArtistNames != null) {
-            metadata.put("trackArtistNames", new ArrayList<String>(Arrays.asList(trackArtistNames.split("/"))));
-        }
-        else {
-            metadata.put("trackArtistNames", null);
-        }
-        String albumName = this.extractMetadata(this.METADATA_KEY_ALBUM);
-        if (albumName != null) {
-            metadata.put("albumName", albumName);
-        }
-        else {
-            metadata.put("trackName", null);
-        }
-        String albumArtistName = this.extractMetadata(this.METADATA_KEY_ALBUMARTIST);
-        if (albumArtistName != null) {
-            metadata.put("albumArtistName", albumArtistName);
-        }
-        else {
-            metadata.put("albumArtistName", null);
-        }
-        String trackNumber = this.extractMetadata(this.METADATA_KEY_CD_TRACK_NUMBER);
-        if (trackNumber != null) {
-            try {
-                metadata.put("trackNumber", Integer.parseInt(trackNumber.split("/")[0].trim()));
-                metadata.put("albumLength", Integer.parseInt(trackNumber.split("/")[trackNumber.split("/").length - 1].trim()));
-            }
-            catch (Exception error) {
-                metadata.put("trackNumber", null);
-                metadata.put("albumLength", null);
-            }
-        }
-        else {
-            metadata.put("trackNumber", null);
-            metadata.put("albumLength", null);
-        }
-        String year = this.extractMetadata(this.METADATA_KEY_YEAR);
-        String date = this.extractMetadata(this.METADATA_KEY_DATE);
-        if (year != null) {
-            try {
-                metadata.put("year", Integer.parseInt(year.trim()));
-            }
-            catch (Exception error) {
-                metadata.put("year", null);
-            }
-        }
-        else if (date != null) {
-            try {
-                metadata.put("year", Integer.parseInt(date.split("-")[0].trim()));
-            }
-            catch (Exception error) {
-                metadata.put("year", null);
-            }
-        }
-        else {
-            metadata.put("year", null);
-        }
-        String genre = this.extractMetadata(this.METADATA_KEY_GENRE);
-        if (genre != null) {
-            metadata.put("genre", genre);
-        }
-        else {
-            metadata.put("genre", null);
-        }
-        String authorName = this.extractMetadata(this.METADATA_KEY_AUTHOR);
-        if (authorName != null) {
-            metadata.put("authorName", authorName);
-        }
-        else {
-            metadata.put("authorName", null);
-        }
-        String writerName = this.extractMetadata(this.METADATA_KEY_WRITER);
-        if (writerName != null) {
-            metadata.put("writerName", writerName);
-        }
-        else {
-            metadata.put("writerName", null);
-        }
-        String discNumber = this.extractMetadata(this.METADATA_KEY_DISC_NUMBER);
-        if (discNumber != null) {
-            try {
-                metadata.put("discNumber", Integer.parseInt(discNumber.trim()));
-            }
-            catch(Exception error) {
-                metadata.put("trackDuration", null);
-            }
-        }
-        else {
-            metadata.put("discNumber", null);
-        }
-        String mimeType = this.extractMetadata(this.METADATA_KEY_MIMETYPE);
-        if (mimeType != null) {
-            metadata.put("mimeType", mimeType);
-        }
-        else {
-            metadata.put("mimeType", null);
-        }
-        String duration = this.extractMetadata(this.METADATA_KEY_DURATION);
-        if (duration != null) {
-            try {
-                metadata.put("trackDuration", Integer.parseInt(duration.trim()));
-            }
-            catch(Exception error) {
-                metadata.put("trackDuration", null);
-            }
-        }
-        else {
-            metadata.put("trackDuration", null);
-        }
-        String bitrate = this.extractMetadata(this.METADATA_KEY_BITRATE);
-        if (bitrate != null) {
-            try {
-                metadata.put("bitrate", Integer.parseInt(bitrate.trim()));
-            }
-            catch (Exception error) {
-                metadata.put("bitrate", null);
-            }
-        }
-        else {
-            metadata.put("bitrate", null);
-        }
-        return metadata;
-    }
-
-    public byte[] getAlbumArt() {
-        return this.getEmbeddedPicture();
-    }
+  public byte[] getAlbumArt() {
+    return this.getEmbeddedPicture();
+  }
 }
