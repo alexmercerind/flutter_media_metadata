@@ -66,20 +66,20 @@ class Metadata {
       albumArt: map['albumArt']);
 
   Map<String, dynamic> toMap() => {
-        'trackName': this.trackName,
-        'trackArtistNames': this.trackArtistNames,
-        'albumName': this.albumName,
-        'albumArtistName': this.albumArtistName,
-        'trackNumber': this.trackNumber,
-        'albumLength': this.albumLength,
-        'year': this.year,
-        'genre': this.genre,
-        'authorName': this.authorName,
-        'writerName': this.writerName,
-        'discNumber': this.discNumber,
-        'mimeType': this.mimeType,
-        'trackDuration': this.trackDuration,
-        'bitrate': this.bitrate,
+        'trackName': trackName,
+        'trackArtistNames': trackArtistNames,
+        'albumName': albumName,
+        'albumArtistName': albumArtistName,
+        'trackNumber': trackNumber,
+        'albumLength': albumLength,
+        'year': year,
+        'genre': genre,
+        'authorName': authorName,
+        'writerName': writerName,
+        'discNumber': discNumber,
+        'mimeType': mimeType,
+        'trackDuration': trackDuration,
+        'bitrate': bitrate,
       };
 
   @override

@@ -1,6 +1,6 @@
 <h1 align='center'><a href='https://github.com/alexmercerind/flutter_media_metadata'>flutter_media_metadata</a></h1>
 <h4 align='center'>A Flutter plugin to read metadata of media files.</h4>
-<h4 align='center'>A part of <a href='https://github.com/alexmercerind/harmonoid'>Harmonoid</a> open source project 💜</h4>
+<h5 align='center'>A part of <a href='https://github.com/alexmercerind/harmonoid'>Harmonoid</a> open source project 💜</h5>
 <br></br>
 <p align='center'><img src='https://github.com/alexmercerind/flutter_media_metadata/blob/assets/windows_active.png?raw=true' height='500'></img></p>
 
