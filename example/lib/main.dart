@@ -21,6 +21,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> onSelected(String path) async {
     FocusScope.of(context).unfocus();
+    print(File(path).existsSync());
     var metadata = await MetadataRetriever.fromFile(File(path));
     setState(() {
       albumArt = metadata.albumArt != null
@@ -172,15 +173,6 @@ class _MyAppState extends State<MyApp> {
                 style: TextStyle(fontSize: 14.0),
                 decoration: InputDecoration(
                     hintText: 'Enter media path.',
-                    border: UnderlineInputBorder(
-                      borderSide: BorderSide(width: 1.0),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 1.0,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
                     hintStyle: TextStyle(fontSize: 14.0)),
               ),
               Divider(
