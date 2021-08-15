@@ -2,7 +2,7 @@
 <h4 align='center'>A Flutter plugin to read metadata of media files.</h4>
 <h5 align='center'>A part of <a href='https://github.com/alexmercerind/harmonoid'>Harmonoid</a> open source project 💜</h5>
 <br></br>
-<p align='center'><img src='https://github.com/alexmercerind/flutter_media_metadata/blob/assets/windows_active.png?raw=true' height='500'></img></p>
+<p align='center'><img src='https://github.com/alexmercerind/flutter_media_metadata/blob/assets/linux_active.png?raw=true' height='500'></img></p>
 
 ## Install
 
@@ -56,7 +56,7 @@ Uint8List? albumArt = metadata.albumArt;
 <img src='https://github.com/alexmercerind/flutter_media_metadata/blob/assets/android.png?raw=true' height='500'></img>
 </td>
 <td>
-<img src='https://github.com/alexmercerind/flutter_media_metadata/blob/assets/linux.png?raw=true' height='500'></img>
+<img src='https://github.com/alexmercerind/flutter_media_metadata/blob/assets/windows_active.png?raw=true' height='500'></img>
 </td>
 </tr>
 </table>
