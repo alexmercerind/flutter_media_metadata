@@ -15,117 +15,131 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Metadata metadata;
-  String mediaFilePath;
-  Widget mediaAlbumArt;
-  Widget mediaMetadata;
+  String path;
+  Widget albumArt;
+  Widget table;
 
-  Future<void> onSelected(String mediaFilePath) async {
+  Future<void> onSelected(String path) async {
     FocusScope.of(context).unfocus();
-    var metadataRetriever = new MetadataRetriever();
-    await metadataRetriever.setFile(File(mediaFilePath));
-    this.metadata = await metadataRetriever.metadata;
-    this.setState(() {
-      this.mediaAlbumArt = metadataRetriever.albumArt != null
-          ? new Image.memory(
-              metadataRetriever.albumArt,
+    var metadata = await MetadataRetriever.fromFile(File(path));
+    setState(() {
+      albumArt = metadata.albumArt != null
+          ? Image.memory(
+              metadata.albumArt,
               height: 200.0,
               width: 200.0,
             )
           : Container(
               height: 200.0,
               width: 200.0,
-              child: Text('No Album Art'),
+              child: Text('No album art.'),
             );
-      this.mediaMetadata = new SingleChildScrollView(
+      table = SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: DataTable(
-          columns: [
-            DataColumn(label: Text('Property')),
-            DataColumn(label: Text('Value')),
-          ],
-          rows: [
-            DataRow(
-              cells: [
-                DataCell(Text('trackName')),
-                DataCell(Text('${this.metadata.trackName}')),
-              ],
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: albumArt ?? Container(),
             ),
-            DataRow(
-              cells: [
-                DataCell(Text('trackArtistNames')),
-                DataCell(Text('${this.metadata.trackArtistNames}')),
-              ],
+            SizedBox(
+              width: 16.0,
             ),
-            DataRow(
-              cells: [
-                DataCell(Text('albumName')),
-                DataCell(Text('${this.metadata.albumName}')),
+            DataTable(
+              columns: [
+                DataColumn(
+                    label: Text('Property',
+                        style: TextStyle(fontWeight: FontWeight.w600))),
+                DataColumn(
+                    label: Text('Value',
+                        style: TextStyle(fontWeight: FontWeight.w600))),
               ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text('albumArtistName')),
-                DataCell(Text('${this.metadata.albumArtistName}')),
-              ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text('trackNumber')),
-                DataCell(Text('${this.metadata.trackNumber}')),
-              ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text('albumLength')),
-                DataCell(Text('${this.metadata.albumLength}')),
-              ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text('year')),
-                DataCell(Text('${this.metadata.year}')),
-              ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text('genre')),
-                DataCell(Text('${this.metadata.genre}')),
-              ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text('authorName')),
-                DataCell(Text('${this.metadata.authorName}')),
-              ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text('writerName')),
-                DataCell(Text('${this.metadata.writerName}')),
-              ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text('discNumber')),
-                DataCell(Text('${this.metadata.discNumber}')),
-              ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text('mimeType')),
-                DataCell(Text('${this.metadata.mimeType}')),
-              ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text('trackDuration')),
-                DataCell(Text('${this.metadata.trackDuration}')),
-              ],
-            ),
-            DataRow(
-              cells: [
-                DataCell(Text('bitrate')),
-                DataCell(Text('${this.metadata.bitrate}')),
+              rows: [
+                DataRow(
+                  cells: [
+                    DataCell(Text('trackName')),
+                    DataCell(Text('${metadata.trackName}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('trackArtistNames')),
+                    DataCell(Text('${metadata.trackArtistNames}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('albumName')),
+                    DataCell(Text('${metadata.albumName}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('albumArtistName')),
+                    DataCell(Text('${metadata.albumArtistName}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('trackNumber')),
+                    DataCell(Text('${metadata.trackNumber}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('albumLength')),
+                    DataCell(Text('${metadata.albumLength}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('year')),
+                    DataCell(Text('${metadata.year}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('genre')),
+                    DataCell(Text('${metadata.genre}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('authorName')),
+                    DataCell(Text('${metadata.authorName}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('writerName')),
+                    DataCell(Text('${metadata.writerName}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('discNumber')),
+                    DataCell(Text('${metadata.discNumber}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('mimeType')),
+                    DataCell(Text('${metadata.mimeType}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('trackDuration')),
+                    DataCell(Text('${metadata.trackDuration}')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('bitrate')),
+                    DataCell(Text('${metadata.bitrate}')),
+                  ],
+                ),
               ],
             ),
           ],
@@ -137,38 +151,68 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('flutter_media_metadata'),
-          ),
-          body: ListView(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('flutter_media_metadata'),
+        ),
+        body: Scrollbar(
+          isAlwaysShown: true,
+          child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             children: [
+              Divider(
+                color: Colors.transparent,
+                height: 16.0,
+              ),
               TextField(
-                onEditingComplete: () => this.onSelected(this.mediaFilePath),
-                onChanged: (String value) => this.mediaFilePath = value,
+                cursorWidth: 1.0,
+                onEditingComplete: () => onSelected(path),
+                onChanged: (String value) => path = value,
+                style: TextStyle(fontSize: 14.0),
                 decoration: InputDecoration(
-                  labelText: 'File Location',
-                  hintText: 'Enter path to a media file.',
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () => this.onSelected(this.mediaFilePath),
-                child: Text('LOAD FILE'),
-              ),
-              this.mediaAlbumArt ?? Container(),
-              this.mediaMetadata ??
-                  Container(
-                    height: 200,
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Enter path to a file to get its metadata.\nDo not forget to give storage permissions to the app.',
-                      textAlign: TextAlign.center,
+                    hintText: 'Enter media path.',
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(width: 1.0),
                     ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 1.0,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    hintStyle: TextStyle(fontSize: 14.0)),
+              ),
+              Divider(
+                color: Colors.transparent,
+                height: 16.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => onSelected(path),
+                    child: Text('Retrieve Metadata'),
+                  ),
+                ],
+              ),
+              Divider(
+                color: Colors.transparent,
+                height: 16.0,
+              ),
+              Divider(
+                color: Colors.transparent,
+                height: 16.0,
+              ),
+              table ??
+                  Text(
+                    'No media opened.',
+                    textAlign: TextAlign.center,
                   ),
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
