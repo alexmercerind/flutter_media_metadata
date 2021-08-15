@@ -1,3 +1,11 @@
+## 0.1.1
+
+- Added Windows support.
+- Moved `MediaMetadataRetriever.setDataSource` & `MediaMetadataRetriever.extractMetadata` calls to another non-UI thread on Android.
+- Improved Linux support.
+- Added support for embedded album arts on Windows & Linux.
+- Changed API to single call, `MetadataRetriever.fromFile`.
+
 ## 0.1.0
 
 - Migrated to null-safety
