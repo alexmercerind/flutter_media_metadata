@@ -1,76 +1,68 @@
-# [flutter_media_metadata](https://github.com/alexmercerind/flutter_media_metadata)
+<h1 align='center'><a href='https://github.com/alexmercerind/flutter_media_metadata'>flutter_media_metadata</a></h1>
+<h4 align='center'>A Flutter plugin to read metadata of media files.</h4>
+<h4 align='center'>A part of <a href='https://github.com/alexmercerind/harmonoid'>Harmonoid</a> open source project 💜</h4>
+<br></br>
+<p align='center'><img src='https://github.com/alexmercerind/flutter_media_metadata/blob/assets/windows_active.png?raw=true' height='500'></img></p>
 
-Flutter plugin for reading :bookmark: metadata of :musical_note: media files.
+## Install
 
-## Installing
+Add in your `pubspec.yaml`.
 
 ```yaml
 dependencies:
-  flutter_media_metadata: ^0.0.3+2
+  ...
+  flutter_media_metadata: ^0.1.1
 ```
 
-## Using
+## Support
 
-```dart
-import 'package:flutter_media_metadata/flutter_media_metadata.dart';
+Consider supporting the project by starring the repository or buying me a coffee.
 
-var retriever = new MetadataRetriever();
-await retriever.setFile(new File('/storage/emulated/0/Music/music.aac'));
-Metadata metadata = await retriever.metadata;
-
-metadata.trackName;
-metadata.trackArtistNames;
-metadata.albumName;
-metadata.albumArtistName;
-metadata.trackNumber;
-metadata.albumLength;
-metadata.year;
-metadata.genre;
-metadata.authorName;
-metadata.writerName;
-metadata.discNumber;
-metadata.mimeType;
-metadata.trackDuration;
-metadata.bitrate;
-
-retriever.albumArt;
-
-await retriever.setUri(new Uri.https('www.example.com', '/audio.MP3', {}));
-
-Map<String, dynamic> = await metadata.toMap();
-
-```
-
-For using this plugin in Linux Desktop app, you must install [MediaInfoLib](https://github.com/MediaArea/MediaInfoLib).
-
-On debian based distros, run
-
-```bash
-sudo apt install libmediainfo-dev
-```
-
-## Supporting
-
-<a href="https://www.buymeacoffee.com/alexmercerind"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=alexmercerind&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"></a>
+<a href='https://www.buymeacoffee.com/alexmercerind'><img src='https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=alexmercerind&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff'></a>
 
 ## Example
 
-You may checkout example app for this plugin [here](https://github.com/alexmercerind/flutter_media_metadata/tree/master/example/lib/main.dart).
+```dart
+var metadata = await MetadataRetriever.fromFile(File('C:/Users/Alex/Music/SampleMusic.OGG'))
 
-#### Android
+String? trackName = metadata.trackName;
+List<String>? trackArtistNames = metadata.trackArtistNames;
+String? albumName = metadata.albumName;
+String? albumArtistName = metadata.albumArtistName;
+int? trackNumber = metadata.trackNumber;
+int? albumLength = metadata.albumLength;
+int? year = metadata.year;
+String? genre = metadata.genre;
+String? authorName = metadata.authorName;
+String? writerName = metadata.writerName;
+int? discNumber = metadata.discNumber;
+String? mimeType = metadata.mimeType;
+int? trackDuration = metadata.trackDuration;
+int? bitrate = metadata.bitrate;
+Uint8List? albumArt = metadata.albumArt;
+```
 
-<img src="https://github.com/alexmercerind/flutter_media_metadata/blob/assets/android.png?raw=true" height="450"></img>
-
-#### Linux
-
-<img src="https://github.com/alexmercerind/flutter_media_metadata/blob/assets/linux.png?raw=true" height="500"></img>
-
-
-## Progress
+## Platforms
 
 |Platform|Status     |
 |--------|-----------|
 |Android |Working    |
 |Linux   |Working    |
-|Windows |Coming Soon|
+|Windows |Working    |
 
+<table>
+<tr>
+<td>
+<img src='https://github.com/alexmercerind/flutter_media_metadata/blob/assets/android.png?raw=true' height='500'></img>
+</td>
+<td>
+<img src='https://github.com/alexmercerind/flutter_media_metadata/blob/assets/linux.png?raw=true' height='500'></img>
+</td>
+</tr>
+</table>
+
+## License 
+
+This library & work under this repository is MIT licensed.
+
+Copyright (C) 2021 Hitesh Kumar Saini <saini123hitesh@gmail.com>
