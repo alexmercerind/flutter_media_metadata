@@ -1,6 +1,6 @@
 name: flutter_media_metadata
-description: Flutter plugin for reading metadata of media files. Supports Android & Linux.
-version: 0.1.0
+description: A Flutter plugin to read metadata of media files.
+version: 0.1.1
 homepage: https://github.com/alexmercerind/flutter_media_metadata
 repository: https://github.com/alexmercerind/flutter_media_metadata
 documentation: https://github.com/alexmercerind/flutter_media_metadata/blob/master/README.md
@@ -22,6 +22,8 @@ flutter:
     platforms:
       android:
         package: com.alexmercerind.flutter_media_metadata
+        pluginClass: FlutterMediaMetadataPlugin
+      windows:
         pluginClass: FlutterMediaMetadataPlugin
       linux:
         pluginClass: FlutterMediaMetadataPlugin
