@@ -14,6 +14,8 @@ dependencies:
   flutter_media_metadata: ^0.1.1
 ```
 
+Issues are maintained [here](https://github.com/alexmercerind/harmonoid).
+
 ## Support
 
 Consider supporting the project by starring the repository or buying me a coffee.
