@@ -47,35 +47,43 @@ void MetadataRetriever::SetFilePath(std::string file_path) {
   Open(TO_WIDESTRING(file_path));
   for (auto & [ property, key ] : kMetadataKeys) {
     std::string value = TO_STRING(Get(MediaInfoDLL::Stream_General, 0, key));
-    metadata_.insert(std::make_pair(property, value));
+    metadata_->insert(std::make_pair(property, value));
   }
   try {
-    auto album_art_base64 = Get(MediaInfoDLL::Stream_General, 0, L"Cover_Data");
-    album_art_ = Base64Decode(TO_STRING(album_art_base64));
-    // TODO (alexmercerind): Improve METADATA_BLOCK_PICTURE extraction.
-    if (Strings::Split(Strings::ToUpperCase(file_path), ".").back() == "OGG" ||
-        Strings::Split(Strings::ToUpperCase(file_path), ".").back() == "FLAC") {
-      uint8_t* data = album_art_.data();
-      size_t size = album_art_.size();
-      size_t header = 0;
-      uint32_t length = 0;
-      RM(4);
-      length = U32_AT(data);
-      header += length;
-      RM(4);
-      RM(length);
-      length = U32_AT(data);
-      header += length;
-      RM(4);
-      RM(length);
-      RM(4 * 4);
-      length = U32_AT(data);
-      RM(4);
-      header += 32;
-      size = length;
-      album_art_ = std::vector(data, data + length);
+    if (Get(MediaInfoDLL::Stream_General, 0, L"Cover") == L"Yes") {
+      std::vector<uint8_t> decoded_album_art = Base64Decode(
+          TO_STRING(Get(MediaInfoDLL::Stream_General, 0, L"Cover_Data")));
+      album_art_.reset(new std::vector<uint8_t>(decoded_album_art));
+      // TODO (alexmercerind): Improve METADATA_BLOCK_PICTURE extraction.
+      if (Strings::Split(Strings::ToUpperCase(file_path), ".").back() ==
+              "OGG" ||
+          Strings::Split(Strings::ToUpperCase(file_path), ".").back() ==
+              "FLAC") {
+        uint8_t* data = decoded_album_art.data();
+        size_t size = decoded_album_art.size();
+        size_t header = 0;
+        uint32_t length = 0;
+        RM(4);
+        length = U32_AT(data);
+        header += length;
+        RM(4);
+        RM(length);
+        length = U32_AT(data);
+        header += length;
+        RM(4);
+        RM(length);
+        RM(4 * 4);
+        length = U32_AT(data);
+        RM(4);
+        header += 32;
+        size = length;
+        album_art_.reset(new std::vector(data, data + length));
+      }
+    } else {
+      album_art_ = nullptr;
     }
   } catch (...) {
+    album_art_ = nullptr;
   }
 }
 

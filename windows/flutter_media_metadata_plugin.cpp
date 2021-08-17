@@ -78,17 +78,20 @@ void FlutterMediaMetadataPlugin::HandleMethodCall(
         std::get<std::string>(arguments[flutter::EncodableValue("filePath")]);
     std::future<void> future =
         std::async([ =, result_ptr = std::move(result) ]()->void {
-          MetadataRetriever retriever;
-          retriever.SetFilePath(file_path);
+          std::unique_ptr<MetadataRetriever> retriever =
+              std::make_unique<MetadataRetriever>();
+          retriever->SetFilePath(file_path);
           flutter::EncodableMap metadata;
-          for (const auto & [ key, value ] : retriever.metadata()) {
+          for (const auto & [ key, value ] : *retriever->metadata()) {
             metadata.insert(std::make_pair(flutter::EncodableValue(key),
                                            flutter::EncodableValue(value)));
           }
-          result_ptr->Success(flutter::EncodableValue(flutter::EncodableMap(
-              {{flutter::EncodableValue("metadata"), metadata},
-               {flutter::EncodableValue("albumArt"),
-                flutter::EncodableValue(retriever.album_art())}})));
+          flutter::EncodableMap response;
+          response.insert(std::make_pair("metadata", metadata));
+          if (retriever->album_art() != nullptr)
+            response.insert(
+                std::make_pair("albumArt", *retriever->album_art()));
+          result_ptr->Success(flutter::EncodableValue(response));
         });
   } else {
     result->NotImplemented();

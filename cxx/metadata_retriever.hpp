@@ -29,6 +29,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
 
 #include <MediaInfoDLL/MediaInfoDLL.hpp>
 
@@ -39,16 +40,19 @@ class MetadataRetriever : public MediaInfoDLL::MediaInfo {
  public:
   MetadataRetriever();
 
-  std::map<std::string, std::string>& metadata() { return metadata_; }
-  std::vector<uint8_t>& album_art() { return album_art_; }
+  std::map<std::string, std::string>* metadata() const {
+    return metadata_.get();
+  }
+  std::vector<uint8_t>* album_art() const { return album_art_.get(); }
 
   void SetFilePath(std::string file_path);
 
   ~MetadataRetriever();
 
  private:
-  std::map<std::string, std::string> metadata_;
-  std::vector<uint8_t> album_art_;
+  std::unique_ptr<std::map<std::string, std::string>> metadata_ =
+      std::make_unique<std::map<std::string, std::string>>();
+  std::unique_ptr<std::vector<uint8_t>> album_art_ = nullptr;
 };
 
 #endif
