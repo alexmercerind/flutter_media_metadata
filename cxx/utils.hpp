@@ -65,7 +65,26 @@ auto TO_WIDESTRING = [](std::string string) -> std::wstring {
 };
 
 auto TO_STRING = [](std::wstring wide_string) -> std::string {
-  return std::string(wide_string.begin(), wide_string.end());
+  // https://engine.chinmaygarde.com/namespaceflutter.html#ad3afca877fd5f01a5e623cd610ace402
+  if (wide_string.empty()) {
+    return std::string();
+  }
+  int target_length = ::WideCharToMultiByte(
+      CP_UTF8, WC_ERR_INVALID_CHARS, wide_string.data(),
+      static_cast<int>(wide_string.length()), nullptr, 0, nullptr, nullptr);
+  if (target_length == 0) {
+    return std::string();
+  }
+  std::string utf8_string;
+  utf8_string.resize(target_length);
+  int converted_length = ::WideCharToMultiByte(
+      CP_UTF8, WC_ERR_INVALID_CHARS, wide_string.data(),
+      static_cast<int>(wide_string.length()), utf8_string.data(), target_length,
+      nullptr, nullptr);
+  if (converted_length == 0) {
+    return std::string();
+  }
+  return utf8_string;
 };
 
 class Strings {
