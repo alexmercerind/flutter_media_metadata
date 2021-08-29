@@ -49,6 +49,7 @@ void MetadataRetriever::SetFilePath(std::string file_path) {
     std::string value = TO_STRING(Get(MediaInfoDLL::Stream_General, 0, key));
     metadata_->insert(std::make_pair(property, value));
   }
+  metadata_->insert(std::make_pair("filePath", file_path));
   try {
     if (Get(MediaInfoDLL::Stream_General, 0, L"Cover") == L"Yes") {
       std::vector<uint8_t> decoded_album_art = Base64Decode(
