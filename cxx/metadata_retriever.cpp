@@ -55,11 +55,18 @@ void MetadataRetriever::SetFilePath(std::string file_path) {
       std::vector<uint8_t> decoded_album_art = Base64Decode(
           TO_STRING(Get(MediaInfoDLL::Stream_General, 0, L"Cover_Data")));
       album_art_.reset(new std::vector<uint8_t>(decoded_album_art));
-      // TODO (alexmercerind): Improve METADATA_BLOCK_PICTURE extraction.
+      // Apparently libmediainfo already handles the seeking of album art
+      // buffer in FLAC.
+      // Its a bug in libmediainfo itself that it doesn't seek
+      // METADATA_BLOCK_PICTURE in OGG & assigns it to "Cover_Data" itself.
+      //
+      // Letting following header seeking code stay for OGG until they fix it.
+      // Further reference:
+      // https://github.com/harmonoid/harmonoid/issues/76
+      // https://github.com/MediaArea/MediaInfoLib/pull/1098
+      //
       if (Strings::Split(Strings::ToUpperCase(file_path), ".").back() ==
-              "OGG" ||
-          Strings::Split(Strings::ToUpperCase(file_path), ".").back() ==
-              "FLAC") {
+          "OGG") {
         uint8_t* data = decoded_album_art.data();
         size_t size = decoded_album_art.size();
         size_t header = 0;
@@ -84,6 +91,7 @@ void MetadataRetriever::SetFilePath(std::string file_path) {
       album_art_ = nullptr;
     }
   } catch (...) {
+    std::cout << "OGG" << std::endl;
     album_art_ = nullptr;
   }
 }
