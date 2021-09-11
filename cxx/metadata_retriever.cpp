@@ -22,9 +22,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#include "metadata_retriever.hpp"
+
 #include <base64.hpp>
 
-#include "metadata_retriever.hpp"
 #include "utils.hpp"
 
 static const std::map<std::string, std::wstring> kMetadataKeys = {
@@ -45,7 +46,7 @@ MetadataRetriever::MetadataRetriever() { Option(L"Cover_Data", L"base64"); }
 
 void MetadataRetriever::SetFilePath(std::string file_path) {
   Open(TO_WIDESTRING(file_path));
-  for (auto & [ property, key ] : kMetadataKeys) {
+  for (auto& [property, key] : kMetadataKeys) {
     std::string value = TO_STRING(Get(MediaInfoDLL::Stream_General, 0, key));
     metadata_->insert(std::make_pair(property, value));
   }
@@ -91,7 +92,6 @@ void MetadataRetriever::SetFilePath(std::string file_path) {
       album_art_ = nullptr;
     }
   } catch (...) {
-    std::cout << "OGG" << std::endl;
     album_art_ = nullptr;
   }
 }

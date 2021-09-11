@@ -65,7 +65,8 @@ auto TO_WIDESTRING = [](std::string string) -> std::wstring {
 };
 
 auto TO_STRING = [](std::wstring wide_string) -> std::string {
-  // https://engine.chinmaygarde.com/namespaceflutter.html#ad3afca877fd5f01a5e623cd610ace402
+// https://engine.chinmaygarde.com/namespaceflutter.html#ad3afca877fd5f01a5e623cd610ace402
+#ifdef _WIN32
   if (wide_string.empty()) {
     return std::string();
   }
@@ -85,6 +86,8 @@ auto TO_STRING = [](std::wstring wide_string) -> std::string {
     return std::string();
   }
   return utf8_string;
+#endif
+  return std::string(wide_string.begin(), wide_string.end());
 };
 
 class Strings {

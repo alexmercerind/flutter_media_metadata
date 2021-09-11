@@ -25,13 +25,12 @@
 #ifndef UNICODE
 #define UNICODE
 #endif
+#include <MediaInfoDLL/MediaInfoDLL.hpp>
 #include <iostream>
-#include <string>
-#include <vector>
 #include <map>
 #include <memory>
-
-#include <MediaInfoDLL/MediaInfoDLL.hpp>
+#include <string>
+#include <vector>
 
 #ifndef METADATA_RETRIEVER_HEADER
 #define METADATA_RETRIEVER_HEADER
