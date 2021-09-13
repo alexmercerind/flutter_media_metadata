@@ -37,10 +37,14 @@ static void flutter_media_metadata_plugin_handle_method_call(
       }
       auto response = fl_value_new_map();
       fl_value_set_string(response, "metadata", metadata);
-      fl_value_set_string(
-          response, "albumArt",
-          fl_value_new_uint8_list(retriever.album_art()->data(),
-                                  retriever.album_art()->size()));
+      if (retriever.album_art() != nullptr) {
+        fl_value_set_string(
+            response, "albumArt",
+            fl_value_new_uint8_list(retriever.album_art()->data(),
+                                    retriever.album_art()->size()));
+      } else {
+        fl_value_set_string(response, "albumArt", fl_value_new_null());
+      }
       fl_method_call_respond(
           method_call,
           FL_METHOD_RESPONSE(fl_method_success_response_new(response)),
