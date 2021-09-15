@@ -86,8 +86,9 @@ auto TO_STRING = [](std::wstring wide_string) -> std::string {
     return std::string();
   }
   return utf8_string;
-#endif
+#elif __linux__
   return std::string(wide_string.begin(), wide_string.end());
+#endif
 };
 
 class Strings {
