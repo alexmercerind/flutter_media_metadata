@@ -45,6 +45,7 @@ static const std::map<std::string, std::wstring> kMetadataKeys = {
 MetadataRetriever::MetadataRetriever() { Option(L"Cover_Data", L"base64"); }
 
 void MetadataRetriever::SetFilePath(std::string file_path) {
+  std::cout << "flutter_media_metadata: " << file_path << std::endl;
   Open(TO_WIDESTRING(file_path));
   for (auto& [property, key] : kMetadataKeys) {
     std::string value = TO_STRING(Get(MediaInfoDLL::Stream_General, 0, key));

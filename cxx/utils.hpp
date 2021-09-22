@@ -87,7 +87,9 @@ auto TO_STRING = [](std::wstring wide_string) -> std::string {
   }
   return utf8_string;
 #elif __linux__
-  return std::string(wide_string.begin(), wide_string.end());
+  std::vector<char> buffer(wide_string.size() * 4);
+  size_t size = wcstombs(&buffer[0], &wide_string[0], buffer.size());
+  return std::string(buffer.data(), size);
 #endif
 };
 
