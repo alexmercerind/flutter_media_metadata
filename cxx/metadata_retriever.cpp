@@ -47,7 +47,7 @@ MetadataRetriever::MetadataRetriever() { Option(L"Cover_Data", L"base64"); }
 void MetadataRetriever::SetFilePath(std::string file_path) {
   std::cout << "flutter_media_metadata: " << file_path << std::endl;
   Open(TO_WIDESTRING(file_path));
-  for (auto& [property, key] : kMetadataKeys) {
+  for (auto & [ property, key ] : kMetadataKeys) {
     std::string value = TO_STRING(Get(MediaInfoDLL::Stream_General, 0, key));
     metadata_->insert(std::make_pair(property, value));
   }
@@ -67,8 +67,8 @@ void MetadataRetriever::SetFilePath(std::string file_path) {
       // https://github.com/harmonoid/harmonoid/issues/76
       // https://github.com/MediaArea/MediaInfoLib/pull/1098
       //
-      if (Strings::Split(Strings::ToUpperCase(file_path), ".").back() ==
-          "OGG") {
+      auto format = TO_STRING(Get(MediaInfoDLL::Stream_General, 0, L"Format"));
+      if (Strings::ToUpperCase(format) == "OGG") {
         uint8_t* data = decoded_album_art.data();
         size_t size = decoded_album_art.size();
         size_t header = 0;

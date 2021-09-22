@@ -47,23 +47,24 @@ class Metadata {
       this.albumArt});
 
   static fromMap(dynamic map) => Metadata(
-      trackName: map['metadata']['trackName'],
-      trackArtistNames: map['metadata']['trackArtistNames'] != null
-          ? map['metadata']['trackArtistNames'].split('/')
-          : null,
-      albumName: map['metadata']['albumName'],
-      albumArtistName: map['metadata']['albumArtistName'],
-      trackNumber: _parseInt(map['metadata']['trackNumber']),
-      albumLength: _parseInt(map['metadata']['albumLength']),
-      year: _parseInt(map['metadata']['year']),
-      genre: map['genre'],
-      authorName: map['metadata']['authorName'],
-      writerName: map['metadata']['writerName'],
-      discNumber: _parseInt(map['metadata']['discNumber']),
-      mimeType: map['metadata']['mimeType'],
-      trackDuration: _parseInt(map['metadata']['trackDuration']),
-      bitrate: _parseInt(map['metadata']['bitrate']),
-      albumArt: map['albumArt']);
+        trackName: map['metadata']['trackName'],
+        trackArtistNames: map['metadata']['trackArtistNames'] != null
+            ? map['metadata']['trackArtistNames'].split('/')
+            : null,
+        albumName: map['metadata']['albumName'],
+        albumArtistName: map['metadata']['albumArtistName'],
+        trackNumber: parse(map['metadata']['trackNumber']),
+        albumLength: parse(map['metadata']['albumLength']),
+        year: parse(map['metadata']['year']),
+        genre: map['genre'],
+        authorName: map['metadata']['authorName'],
+        writerName: map['metadata']['writerName'],
+        discNumber: parse(map['metadata']['discNumber']),
+        mimeType: map['metadata']['mimeType'],
+        trackDuration: parse(map['metadata']['trackDuration']),
+        bitrate: parse(map['metadata']['bitrate']),
+        albumArt: map['albumArt'],
+      );
 
   Map<String, dynamic> toMap() => {
         'trackName': trackName,
@@ -86,9 +87,14 @@ class Metadata {
   String toString() => JsonEncoder.withIndent('    ').convert(toMap());
 }
 
-int? _parseInt(dynamic value) {
+int? parse(String? string) {
+  if (string == null) return null;
   try {
-    return int.tryParse(value);
+    try {
+      return int.parse(string);
+    } catch (exception) {
+      return int.parse(string.split('/').first);
+    }
   } catch (exception) {}
   return null;
 }
