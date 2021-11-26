@@ -135,6 +135,12 @@ public final class ItunesMetadataRetriever: MetadataRetrieverProtocol {
     }
     return String(discNumber)
   }
+
+  func getAlbumArt() -> Data? {
+    return metadataItems.first(where: {
+      $0.identifier == AVMetadataIdentifier.iTunesMetadataCoverArt
+    })?.dataValue
+  }
 }
 
 extension ItunesMetadataRetriever {

@@ -281,4 +281,10 @@ public final class Id3MetadataRetriever: MetadataRetrieverProtocol {
     }
     return String(discNumber)
   }
+
+  func getAlbumArt() -> Data? {
+    return metadataItems.first(where: {
+      $0.identifier == AVMetadataIdentifier.id3MetadataAttachedPicture
+    })?.dataValue
+  }
 }

@@ -14,6 +14,7 @@ protocol MetadataRetrieverProtocol {
   func getAuthorName() -> String?
   func getWriterName() -> String?
   func getDiscNumber() -> String?
+  func getAlbumArt() -> Data?
 }
 
 public class MetadataRetriever {
@@ -152,8 +153,6 @@ public class MetadataRetriever {
   }
 
   public func getAlbumArt() -> Data? {
-    return asset.metadata.first(where: {
-      $0.identifier == AVMetadataIdentifier.id3MetadataAttachedPicture
-    })?.dataValue
+    return preferredRetriever?.getAlbumArt()
   }
 }
