@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 
-var kChannel = const MethodChannel('flutter_media_metadata');
+var _kChannel = const MethodChannel('flutter_media_metadata');
 
 class MetadataRetriever {
   static Future<Metadata> fromFile(File file) async {
-    return Metadata.fromMap(await kChannel
+    return Metadata.fromMap(await _kChannel
         .invokeMethod('MetadataRetriever', {'filePath': file.path}));
   }
 }
@@ -53,16 +53,16 @@ class Metadata {
             : null,
         albumName: map['metadata']['albumName'],
         albumArtistName: map['metadata']['albumArtistName'],
-        trackNumber: parse(map['metadata']['trackNumber']),
-        albumLength: parse(map['metadata']['albumLength']),
-        year: parse(map['metadata']['year']),
+        trackNumber: _parse(map['metadata']['trackNumber']),
+        albumLength: _parse(map['metadata']['albumLength']),
+        year: _parse(map['metadata']['year']),
         genre: map['genre'],
         authorName: map['metadata']['authorName'],
         writerName: map['metadata']['writerName'],
-        discNumber: parse(map['metadata']['discNumber']),
+        discNumber: _parse(map['metadata']['discNumber']),
         mimeType: map['metadata']['mimeType'],
-        trackDuration: parse(map['metadata']['trackDuration']),
-        bitrate: parse(map['metadata']['bitrate']),
+        trackDuration: _parse(map['metadata']['trackDuration']),
+        bitrate: _parse(map['metadata']['bitrate']),
         albumArt: map['albumArt'],
       );
 
@@ -87,14 +87,18 @@ class Metadata {
   String toString() => JsonEncoder.withIndent('    ').convert(toMap());
 }
 
-int? parse(String? string) {
-  if (string == null) return null;
-  try {
+int? _parse(dynamic value) {
+  if (value == null) return null;
+  if (value is int)
+    return value;
+  else if (value is String) {
     try {
-      return int.parse(string);
-    } catch (exception) {
-      return int.parse(string.split('/').first);
-    }
-  } catch (exception) {}
+      try {
+        return int.parse(value);
+      } catch (exception) {
+        return int.parse(value.split('/').first);
+      }
+    } catch (exception) {}
+  }
   return null;
 }
