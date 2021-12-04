@@ -11,16 +11,10 @@ Add in your `pubspec.yaml`.
 ```yaml
 dependencies:
   ...
-  flutter_media_metadata: ^0.1.1
+  flutter_media_metadata: ^0.1.2
 ```
 
 Issues are maintained [here](https://github.com/alexmercerind/harmonoid).
-
-## Support
-
-Consider supporting the project by starring the repository or buying me a coffee.
-
-<a href='https://www.buymeacoffee.com/alexmercerind'><img src='https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=alexmercerind&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff'></a>
 
 ## Example
 
@@ -46,11 +40,13 @@ Uint8List? albumArt = metadata.albumArt;
 
 ## Platforms
 
-|Platform|Status     |
-|--------|-----------|
-|Android |Working    |
-|Linux   |Working    |
-|Windows |Working    |
+|Platform|Status         |Author/Maintainer                                             |                                                  
+|--------|---------------|--------------------------------------------------------------|
+|Windows |Working        |[Hitesh Kumar Saini](https://github.com/alexmercerind)        |
+|Linux   |Working        |[Hitesh Kumar Saini](https://github.com/alexmercerind)        |
+|Android |Working        |[Hitesh Kumar Saini](https://github.com/alexmercerind)        |
+|iOS     |Working        |[@DiscombobulatedDrag](https://github.com/DiscombobulatedDrag)|
+|MacOS   |Not Working    |[N/A](#)                                                      |
 
 <table>
 <tr>
