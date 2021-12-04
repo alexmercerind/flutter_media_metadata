@@ -1,3 +1,14 @@
+## 0.1.2
+
+- Add iOS support (@DiscombobulatedDrag)
+- Linux: Use `wcstombs` for `std::wstring` conversion (@alexmercerind).
+- Linux: Fix segmentation fault with no album art files (@alexmercerind).
+- Windows: Fix media having no tags & embedded album art container causing crash (@alexmercerind).
+- Windows: Fix UTF16 tags not being parsed properly (@alexmercerind).
+- Windows: Add `file_path` to metadata (@alexmercerind).
+- Windows & Linux: Fix FLAC album arts (@alexmercerind).
+- Windows & Linux: Use Format `Stream_General` for METADATA_BLOCK_PICTURE detection (@alexmercerind).
+
 ## 0.1.1
 
 - Added Windows support.
