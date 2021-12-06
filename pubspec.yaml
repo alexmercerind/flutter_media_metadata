@@ -29,3 +29,5 @@ flutter:
         pluginClass: FlutterMediaMetadataPlugin
       ios:
         pluginClass: FlutterMediaMetadataPlugin
+      macos:
+        pluginClass: FlutterMediaMetadataPlugin

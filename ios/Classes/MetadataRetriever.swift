@@ -1,6 +1,11 @@
 import AVFoundation
 import Foundation
-import MobileCoreServices
+
+#if os(macOS)
+  import CoreServices
+#elseif os(iOS)
+  import MobileCoreServices
+#endif
 
 protocol MetadataRetrieverProtocol {
   func getTrackName() -> String?
