@@ -1,6 +1,5 @@
 import AVFoundation
 import Foundation
-import MobileCoreServices
 
 public final class Id3MetadataRetriever: MetadataRetrieverProtocol {
 
