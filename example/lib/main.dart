@@ -1,11 +1,28 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 
+const kPluginName = 'flutter_media_metadata';
+
 void main() {
-  runApp(MyApp());
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Color(0xFF121212),
+      systemNavigationBarIconBrightness: Brightness.light,
+    ),
+  );
+  runApp(
+    MaterialApp(
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.dark,
+      home: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -14,196 +31,207 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Metadata metadata;
-  String path;
-  Widget albumArt;
-  Widget table;
-
-  Future<void> onSelected(String path) async {
-    FocusScope.of(context).unfocus();
-    print(File(path).existsSync());
-    var metadata = await MetadataRetriever.fromFile(File(path));
-    setState(() {
-      albumArt = metadata.albumArt != null
-          ? Image.memory(
-              metadata.albumArt,
-              height: 200.0,
-              width: 200.0,
-            )
-          : Container(
-              height: 200.0,
-              width: 200.0,
-              child: Text('No album art.'),
-            );
-      table = SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(20.0),
-              child: albumArt ?? Container(),
-            ),
-            SizedBox(
-              width: 16.0,
-            ),
-            DataTable(
-              columns: [
-                DataColumn(
-                    label: Text('Property',
-                        style: TextStyle(fontWeight: FontWeight.w600))),
-                DataColumn(
-                    label: Text('Value',
-                        style: TextStyle(fontWeight: FontWeight.w600))),
-              ],
-              rows: [
-                DataRow(
-                  cells: [
-                    DataCell(Text('trackName')),
-                    DataCell(Text('${metadata.trackName}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('trackArtistNames')),
-                    DataCell(Text('${metadata.trackArtistNames}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('albumName')),
-                    DataCell(Text('${metadata.albumName}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('albumArtistName')),
-                    DataCell(Text('${metadata.albumArtistName}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('trackNumber')),
-                    DataCell(Text('${metadata.trackNumber}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('albumLength')),
-                    DataCell(Text('${metadata.albumLength}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('year')),
-                    DataCell(Text('${metadata.year}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('genre')),
-                    DataCell(Text('${metadata.genre}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('authorName')),
-                    DataCell(Text('${metadata.authorName}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('writerName')),
-                    DataCell(Text('${metadata.writerName}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('discNumber')),
-                    DataCell(Text('${metadata.discNumber}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('mimeType')),
-                    DataCell(Text('${metadata.mimeType}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('trackDuration')),
-                    DataCell(Text('${metadata.trackDuration}')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('bitrate')),
-                    DataCell(Text('${metadata.bitrate}')),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-    });
-  }
+  Widget? _child;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text('flutter_media_metadata'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          kPluginName,
         ),
-        body: Scrollbar(
-          isAlwaysShown: true,
-          child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            children: [
-              Divider(
-                color: Colors.transparent,
-                height: 16.0,
-              ),
-              TextField(
-                cursorWidth: 1.0,
-                onEditingComplete: () => onSelected(path),
-                onChanged: (String value) => path = value,
-                style: TextStyle(fontSize: 14.0),
-                decoration: InputDecoration(
-                    hintText: 'Enter media path.',
-                    hintStyle: TextStyle(fontSize: 14.0)),
-              ),
-              Divider(
-                color: Colors.transparent,
-                height: 16.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () => onSelected(path),
-                    child: Text('Retrieve Metadata'),
-                  ),
-                ],
-              ),
-              Divider(
-                color: Colors.transparent,
-                height: 16.0,
-              ),
-              Divider(
-                color: Colors.transparent,
-                height: 16.0,
-              ),
-              table ??
-                  Text(
-                    'No media opened.',
-                    textAlign: TextAlign.center,
-                  ),
-            ],
-          ),
-        ),
+      ),
+      backgroundColor: Color(0xFF121212),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          FilePicker.platform.pickFiles()
+            ..then(
+              (result) {
+                if (result == null) return;
+                if (result.count == 0) return;
+                MetadataRetriever.fromFile(
+                  File(result.files.first.path!),
+                )
+                  ..then(
+                    (metadata) {
+                      setState(() {
+                        _child = ListView(
+                          scrollDirection: MediaQuery.of(context).size.height >
+                                  MediaQuery.of(context).size.width
+                              ? Axis.vertical
+                              : Axis.horizontal,
+                          children: [
+                            metadata.albumArt == null
+                                ? Container(
+                                    alignment: Alignment.center,
+                                    height: MediaQuery.of(context).size.height >
+                                            MediaQuery.of(context).size.width
+                                        ? MediaQuery.of(context).size.width
+                                        : 256.0,
+                                    width: MediaQuery.of(context).size.height >
+                                            MediaQuery.of(context).size.width
+                                        ? MediaQuery.of(context).size.width
+                                        : 256.0,
+                                    child: Text('null'),
+                                  )
+                                : Image.memory(
+                                    metadata.albumArt!,
+                                    height: MediaQuery.of(context).size.height >
+                                            MediaQuery.of(context).size.width
+                                        ? MediaQuery.of(context).size.width
+                                        : 256.0,
+                                    width: MediaQuery.of(context).size.height >
+                                            MediaQuery.of(context).size.width
+                                        ? MediaQuery.of(context).size.width
+                                        : 256.0,
+                                  ),
+                            SizedBox(
+                              width: 16.0,
+                            ),
+                            SingleChildScrollView(
+                              scrollDirection:
+                                  MediaQuery.of(context).size.height >
+                                          MediaQuery.of(context).size.width
+                                      ? Axis.horizontal
+                                      : Axis.vertical,
+                              child: DataTable(
+                                columns: [
+                                  DataColumn(
+                                    label: Text(
+                                      'Property',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      'Value',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                                rows: [
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('trackName')),
+                                      DataCell(Text('${metadata.trackName}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('trackArtistNames')),
+                                      DataCell(
+                                          Text('${metadata.trackArtistNames}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('albumName')),
+                                      DataCell(Text('${metadata.albumName}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('albumArtistName')),
+                                      DataCell(
+                                          Text('${metadata.albumArtistName}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('trackNumber')),
+                                      DataCell(Text('${metadata.trackNumber}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('albumLength')),
+                                      DataCell(Text('${metadata.albumLength}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('year')),
+                                      DataCell(Text('${metadata.year}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('genre')),
+                                      DataCell(Text('${metadata.genre}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('authorName')),
+                                      DataCell(Text('${metadata.authorName}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('writerName')),
+                                      DataCell(Text('${metadata.writerName}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('discNumber')),
+                                      DataCell(Text('${metadata.discNumber}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('mimeType')),
+                                      DataCell(Text('${metadata.mimeType}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('trackDuration')),
+                                      DataCell(
+                                          Text('${metadata.trackDuration}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('bitrate')),
+                                      DataCell(Text('${metadata.bitrate}')),
+                                    ],
+                                  ),
+                                  DataRow(
+                                    cells: [
+                                      DataCell(Text('filePath')),
+                                      DataCell(Text('${metadata.filePath}')),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        );
+                      });
+                    },
+                  )
+                  ..catchError((_) {
+                    setState(() {
+                      _child = Text('Couldn\'t extract metadata');
+                    });
+                  });
+              },
+            )
+            ..catchError((_) {
+              setState(() {
+                _child = Text('Couldn\'t to select file');
+              });
+            });
+        },
+        child: Icon(Icons.file_present),
+      ),
+      body: Center(
+        child: _child ?? Text('Press FAB to open a media file'),
       ),
     );
   }

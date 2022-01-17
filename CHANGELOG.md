@@ -1,3 +1,11 @@
+## 0.1.3
+
+- Add macOS support (@DiscombobulatedDrag).
+- Add optional `createNewInstance` argument to `MetadataRetriever.fromFile` (@alexmercerind).
+  - Works only on Android.
+  - Creates new `MediaMetadataRetriever` instance.
+  - Forces `CompletableFuture`.
+
 ## 0.1.2
 
 - Add iOS support (@DiscombobulatedDrag)
