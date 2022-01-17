@@ -18,6 +18,7 @@ import io.flutter.plugin.common.MethodChannel.Result;
 
 public class FlutterMediaMetadataPlugin implements FlutterPlugin, MethodCallHandler {
   private MethodChannel channel;
+  private MetadataRetriever retriever = new MetadataRetriever();
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
@@ -30,25 +31,37 @@ public class FlutterMediaMetadataPlugin implements FlutterPlugin, MethodCallHand
   @Override
   public void onMethodCall(@NonNull final MethodCall call, @NonNull final Result result) {
     if (call.method.equals("MetadataRetriever")) {
-      CompletableFuture.runAsync(new Runnable() {
-        @Override
-        public void run() {
-          String filePath = (String) call.argument("filePath");
-          MetadataRetriever retriever = new MetadataRetriever();
-          retriever.setFilePath(filePath);
-          final HashMap<String, Object> response = new HashMap<String, Object>();
-          response.put("metadata", retriever.getMetadata());
-          response.put("albumArt", retriever.getAlbumArt());
-          retriever.release();
-          new Handler(Looper.getMainLooper())
-              .post(new Runnable() {
-                @Override
-                public void run() {
-                  result.success(response);
-                }
-              });
-        }
-      });
+      final String filePath = (String) call.argument("filePath");
+      boolean createNewInstance = false;
+      if (call.hasArgument("createNewInstance")) {
+        createNewInstance = (boolean) call.argument("createNewInstance");
+      }
+      if (createNewInstance) {
+        CompletableFuture.runAsync(new Runnable() {
+          @Override
+          public void run() {
+            MetadataRetriever retriever = new MetadataRetriever();
+            retriever.setFilePath(filePath);
+            final HashMap<String, Object> response = new HashMap<String, Object>();
+            response.put("metadata", retriever.getMetadata());
+            response.put("albumArt", retriever.getAlbumArt());
+            retriever.release();
+            new Handler(Looper.getMainLooper())
+                .post(new Runnable() {
+                  @Override
+                  public void run() {
+                    result.success(response);
+                  }
+                });
+          }
+        });
+      } else {
+        final HashMap<String, Object> response = new HashMap<String, Object>();
+        retriever.setFilePath(filePath);
+        response.put("metadata", retriever.getMetadata());
+        response.put("albumArt", retriever.getAlbumArt());
+        result.success(response);
+      }
     } else {
       result.notImplemented();
     }
