@@ -6,9 +6,19 @@ import 'package:flutter/services.dart';
 var _kChannel = const MethodChannel('flutter_media_metadata');
 
 class MetadataRetriever {
-  static Future<Metadata> fromFile(File file) async {
-    return Metadata.fromMap(await _kChannel
-        .invokeMethod('MetadataRetriever', {'filePath': file.path}));
+  static Future<Metadata> fromFile(
+    File file, {
+    bool createNewInstance: false,
+  }) async {
+    var metadata = await _kChannel.invokeMethod(
+      'MetadataRetriever',
+      {
+        'filePath': file.path,
+        'createNewInstance': createNewInstance,
+      },
+    );
+    metadata['filePath'] = file.path;
+    return Metadata.fromJson(metadata);
   }
 }
 
@@ -28,25 +38,28 @@ class Metadata {
   final int? trackDuration;
   final int? bitrate;
   final Uint8List? albumArt;
+  final String filePath;
 
-  const Metadata(
-      {this.trackName,
-      this.trackArtistNames,
-      this.albumName,
-      this.albumArtistName,
-      this.trackNumber,
-      this.albumLength,
-      this.year,
-      this.genre,
-      this.authorName,
-      this.writerName,
-      this.discNumber,
-      this.mimeType,
-      this.trackDuration,
-      this.bitrate,
-      this.albumArt});
+  const Metadata({
+    this.trackName,
+    this.trackArtistNames,
+    this.albumName,
+    this.albumArtistName,
+    this.trackNumber,
+    this.albumLength,
+    this.year,
+    this.genre,
+    this.authorName,
+    this.writerName,
+    this.discNumber,
+    this.mimeType,
+    this.trackDuration,
+    this.bitrate,
+    this.albumArt,
+    required this.filePath,
+  });
 
-  static fromMap(dynamic map) => Metadata(
+  factory Metadata.fromJson(dynamic map) => Metadata(
         trackName: map['metadata']['trackName'],
         trackArtistNames: map['metadata']['trackArtistNames'] != null
             ? map['metadata']['trackArtistNames'].split('/')
@@ -64,9 +77,10 @@ class Metadata {
         trackDuration: _parse(map['metadata']['trackDuration']),
         bitrate: _parse(map['metadata']['bitrate']),
         albumArt: map['albumArt'],
+        filePath: map['filePath'],
       );
 
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toJson() => {
         'trackName': trackName,
         'trackArtistNames': trackArtistNames,
         'albumName': albumName,
@@ -81,24 +95,27 @@ class Metadata {
         'mimeType': mimeType,
         'trackDuration': trackDuration,
         'bitrate': bitrate,
+        'filePath': filePath,
       };
 
   @override
-  String toString() => JsonEncoder.withIndent('    ').convert(toMap());
+  String toString() => JsonEncoder.withIndent('    ').convert(toJson());
 }
 
 int? _parse(dynamic value) {
-  if (value == null) return null;
-  if (value is int)
+  if (value == null) {
+    return null;
+  }
+  if (value is int) {
     return value;
-  else if (value is String) {
+  } else if (value is String) {
     try {
       try {
         return int.parse(value);
-      } catch (exception) {
+      } catch (_) {
         return int.parse(value.split('/').first);
       }
-    } catch (exception) {}
+    } catch (_) {}
   }
   return null;
 }
