@@ -96,4 +96,4 @@ _Example app running on Linux._
 
 This library & work under this repository is MIT licensed.
 
-Copyright (C) 2021 Hitesh Kumar Saini <saini123hitesh@gmail.com>
+Copyright (c) 2021-2022 Hitesh Kumar Saini <saini123hitesh@gmail.com>
