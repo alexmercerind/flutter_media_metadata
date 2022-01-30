@@ -1,8 +1,5 @@
-<h1 align='center'><a href='https://github.com/alexmercerind/flutter_media_metadata'>flutter_media_metadata</a></h1>
-<h4 align='center'>A Flutter plugin to read metadata of media files.</h4>
-<h5 align='center'>A part of <a href='https://github.com/alexmercerind/harmonoid'>Harmonoid</a> open source project 💜</h5>
-<br></br>
-<p align='center'><img src='https://github.com/alexmercerind/flutter_media_metadata/blob/assets/linux_active.png?raw=true' height='500'></img></p>
+# [flutter_media_metadata](https://github.com/alexmercerind/flutter_media_metadata)
+#### A Flutter plugin to read 🔖 metadata of 🎵 media files.
 
 ## Install
 
@@ -11,15 +8,27 @@ Add in your `pubspec.yaml`.
 ```yaml
 dependencies:
   ...
-  flutter_media_metadata: ^0.1.2
+  flutter_media_metadata: ^1.0.0
 ```
 
-Issues are maintained [here](https://github.com/alexmercerind/harmonoid).
+<img width="649" src="https://user-images.githubusercontent.com/28951144/151707391-a59bd40a-5303-4dd8-af35-ff8918894dbb.png">
 
-## Example
+_Example app running on Windows._
+
+## Support
+
+[![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/alexmercerind)
+
+<a href="https://www.buymeacoffee.com/alexmercerind" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
+Please consider buying me a coffee if you like the plugin.
+
+## Documentation
+
+#### Windows, Linux, macOS, Android & iOS
 
 ```dart
-var metadata = await MetadataRetriever.fromFile(File('C:/Users/Alex/Music/SampleMusic.OGG'))
+final metadata = await MetadataRetriever.fromFile(File(filePath));
 
 String? trackName = metadata.trackName;
 List<String>? trackArtistNames = metadata.trackArtistNames;
@@ -38,26 +47,50 @@ int? bitrate = metadata.bitrate;
 Uint8List? albumArt = metadata.albumArt;
 ```
 
+#### Web
+
+For using the plugin on web, add following line to your `index.html`.
+
+```diff
+   <link rel="manifest" href="manifest.json">
+ </head>
+ <body>
++  <script type="text/javascript" src="https://unpkg.com/mediainfo.js/dist/mediainfo.min.js"></script>
+   <!-- This script installs service_worker.js to provide PWA functionality to
+        application. For more information, see:
+        https://developers.google.com/web/fundamentals/primers/service-workers -->
+   <script>
+     var serviceWorkerVersion = null;
+     var scriptLoaded = false;
+```
+
+And use `MetadataRetriever.fromBytes` instead of `MetadataRetriever.fromFile`.
+
+
 ## Platforms
 
-|Platform|Status         |Author/Maintainer                                             |                                                  
-|--------|---------------|--------------------------------------------------------------|
-|Windows |Working        |[Hitesh Kumar Saini](https://github.com/alexmercerind)        |
-|Linux   |Working        |[Hitesh Kumar Saini](https://github.com/alexmercerind)        |
-|Android |Working        |[Hitesh Kumar Saini](https://github.com/alexmercerind)        |
-|iOS     |Working        |[@DiscombobulatedDrag](https://github.com/DiscombobulatedDrag)|
-|MacOS   |Not Working    |[N/A](#)                                                      |
+|Platform|Status   |Author/Maintainer                                             |                                                  
+|--------|---------|--------------------------------------------------------------|
+|Windows |✔️        |[Hitesh Kumar Saini](https://github.com/alexmercerind)        |
+|Linux   |✔️        |[Hitesh Kumar Saini](https://github.com/alexmercerind)        |
+|Android |✔️        |[Hitesh Kumar Saini](https://github.com/alexmercerind)        |
+|Web     |✔️        |[Hitesh Kumar Saini](https://github.com/alexmercerind)        |
+|MacOS   |✔️        |[@DiscombobulatedDrag](https://github.com/DiscombobulatedDrag)|
+|iOS     |✔️        |[@DiscombobulatedDrag](https://github.com/DiscombobulatedDrag)|
 
-<table>
-<tr>
-<td>
-<img src='https://github.com/alexmercerind/flutter_media_metadata/blob/assets/android.png?raw=true' height='500'></img>
-</td>
-<td>
-<img src='https://github.com/alexmercerind/flutter_media_metadata/blob/assets/windows_active.png?raw=true' height='500'></img>
-</td>
-</tr>
-</table>
+
+<img width="555" src="https://user-images.githubusercontent.com/28951144/151707427-76d75f04-9efe-4b1d-80fb-fdeea73dad26.png">
+
+_Example app running on Web._
+
+<img width="200" src="https://user-images.githubusercontent.com/28951144/151707533-198ba2ca-d646-4bc4-811b-928f65ee03ea.png">
+
+_Example app running on Android._
+
+<img width="555" src="https://user-images.githubusercontent.com/28951144/151707526-319ca3f5-9849-4d57-8ea4-9595ee67e99c.png">
+
+_Example app running on Linux._
+
 
 ## License 
 
