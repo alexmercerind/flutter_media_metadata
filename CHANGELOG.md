@@ -1,3 +1,10 @@
+## 1.0.0
+
+- Now supporting all platforms Windows, Linux, macOS, Android, iOS & Web.
+- Add web support (@alexmercerind).
+- Add iOS support (@DiscombobulatedDrag).
+- Revert to using `CompletableFuture` on Android (@alexmercerind).
+
 ## 0.1.3
 
 - Add macOS support (@DiscombobulatedDrag).
@@ -46,6 +53,7 @@
 - Now bitrate & duration in stored in Metadata itself.
 
 ## 0.0.1+3
+
 - More minor changes.
 
 ## 0.0.1+2
@@ -54,6 +62,5 @@
 
 ## 0.0.1
 
-This first version of media_metadata_retriever adds:
 - Support for retriving metadata of a media file in Android.
 - Uses [MediaMetadataRetriever](https://developer.android.com/reference/android/media/MediaMetadataRetriever).
