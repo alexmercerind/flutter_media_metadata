@@ -17,9 +17,8 @@
    René Nyffenegger rene.nyffenegger@adp-gmbh.ch
 */
 
-#include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 
 #ifndef BASE64_HEADER
 #define BASE64_HEADER
