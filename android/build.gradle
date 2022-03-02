@@ -30,4 +30,7 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+    dependencies {
+        compile 'net.sourceforge.streamsupport:android-retrofuture:1.7.2'
+    }
 }
