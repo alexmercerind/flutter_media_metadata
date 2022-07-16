@@ -79,9 +79,10 @@ class Metadata {
 
   factory Metadata.fromJson(dynamic map) => Metadata(
         trackName: map['metadata']['trackName'],
-        trackArtistNames: map['metadata']['trackArtistNames'] != null
-            ? map['metadata']['trackArtistNames'].split('/')
-            : null,
+        // trackArtistNames: map['metadata']['trackArtistNames'] != null
+        //     ? map['metadata']['trackArtistNames'].split('/')
+        //     : null,
+        trackArtistNames: map['metadata']['trackArtistNames']?.split('/'),
         albumName: map['metadata']['albumName'],
         albumArtistName: map['metadata']['albumArtistName'],
         trackNumber: parseInteger(map['metadata']['trackNumber']),
