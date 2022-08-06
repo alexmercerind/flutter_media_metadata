@@ -137,13 +137,19 @@ class MetadataRetriever {
 
 @JS('Promise')
 class _Promise<T> {
-  external _Promise(void executor(void resolve(T result), Function reject));
-  external _Promise then(void onFulfilled(T result), [Function onRejected]);
+  external _Promise(
+      void Function(void Function(T result) resolve, Function reject) executor);
+  external _Promise then(void Function(T result) onFulfilled,
+      [Function onRejected]);
+  // external _Promise(void executor(void resolve(T result), Function reject));
+  // external _Promise then(void onFulfilled(T result), [Function onRejected]);
 }
 
 @JS('MediaInfo')
+// ignore: non_constant_identifier_names
 external String MediaInfo(
   Object opts,
+  // ignore: library_private_types_in_public_api
   void Function(_MediaInfo) successCallback,
   void Function() erroCallback,
 );
@@ -162,7 +168,8 @@ class _Opts {
 @anonymous
 class _MediaInfo {
   external _Promise<String> analyzeData(int Function() getSize,
-      _Promise<Uint8List> promise(int chunkSize, int offset));
+      _Promise<Uint8List> Function(int chunkSize, int offset) promise);
+  // _Promise<Uint8List> promise(int chunkSize, int offset));
 
   external factory _MediaInfo();
 }
