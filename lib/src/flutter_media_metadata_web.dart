@@ -108,7 +108,7 @@ class MetadataRetriever {
                 }
                 final metadata = <String, dynamic>{
                   'metadata': {},
-                  'albumArt': base64Decode(rawMetadataJson['Cover_Data']),
+                  'albumArt': (rawMetadataJson['Cover_Data'] == null) ? null : base64Decode(rawMetadataJson['Cover_Data']),
                   'filePath': null,
                 };
                 _kMetadataKeys.forEach((key, value) {
