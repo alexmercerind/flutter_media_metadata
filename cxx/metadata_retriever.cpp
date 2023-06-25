@@ -53,23 +53,17 @@ void MetadataRetriever::SetFilePath(std::string file_path) {
       auto format = TO_STRING(Get(MediaInfoDLL::Stream_General, 0, L"Format"));
       if (Strings::ToUpperCase(format) == "OGG") {
         uint8_t* data = decoded_album_art.data();
-        size_t size = decoded_album_art.size();
-        size_t header = 0;
         uint32_t length = 0;
-        RM(4);
+        data += 4;
         length = U32_AT(data);
-        header += length;
-        RM(4);
-        RM(length);
+        data += 4;
+        data += length;
         length = U32_AT(data);
-        header += length;
-        RM(4);
-        RM(length);
-        RM(4 * 4);
+        data += 4;
+        data += length;
+        data += 4*4;
         length = U32_AT(data);
-        RM(4);
-        header += 32;
-        size = length;
+        data += 4;
         album_art_.reset(new std::vector(data, data + length));
       }
     } else {
