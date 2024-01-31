@@ -208,19 +208,19 @@ public final class Id3MetadataRetriever: MetadataRetrieverProtocol {
 
   func getTrackName() -> String? {
     return metadataItems.first(where: {
-      $0.identifier == AVMetadataIdentifier.id3MetadataTitleDescription
+        $0.identifier == AVMetadataIdentifier.id3MetadataTitleDescription || $0.commonKey == AVMetadataKey.commonKeyTitle
     })?.stringValue
   }
 
   func getArtistNames() -> String? {
     return metadataItems.first(where: {
-      $0.identifier == AVMetadataIdentifier.id3MetadataLeadPerformer
+      $0.identifier == AVMetadataIdentifier.id3MetadataLeadPerformer || $0.commonKey == AVMetadataKey.commonKeyArtist
     })?.stringValue
   }
 
   func getAlbumName() -> String? {
     return metadataItems.first(where: {
-      $0.identifier == AVMetadataIdentifier.id3MetadataAlbumTitle
+      $0.identifier == AVMetadataIdentifier.id3MetadataAlbumTitle || $0.commonKey == AVMetadataKey.commonKeyAlbumName
     })?.stringValue
   }
 
@@ -246,18 +246,18 @@ public final class Id3MetadataRetriever: MetadataRetrieverProtocol {
   }
 
   func getYear() -> String? {
-    return metadataItems.first(where: { $0.identifier == AVMetadataIdentifier.id3MetadataYear })?
+      return metadataItems.first(where: { $0.identifier == AVMetadataIdentifier.id3MetadataYear })?
       .stringValue
   }
 
   func getGenre() -> String? {
+    let tcon = metadataItems.first(where: {
+      $0.identifier == AVMetadataIdentifier.id3MetadataContentType || $0.commonKey == AVMetadataKey.commonKeyType
+    })?.stringValue
     guard
-      let tcon = metadataItems.first(where: {
-        $0.identifier == AVMetadataIdentifier.id3MetadataContentType
-      })?.stringValue,
-      let genreIndex = Int(tcon), genreIndex < Id3MetadataRetriever.standardGenres.count
+      let genreIndex = Int(tcon ?? ""), genreIndex < Id3MetadataRetriever.standardGenres.count
     else {
-      return nil
+      return tcon
     }
 
     return Id3MetadataRetriever.standardGenres[genreIndex]
@@ -265,13 +265,13 @@ public final class Id3MetadataRetriever: MetadataRetrieverProtocol {
 
   func getAuthorName() -> String? {
     // NOTE: compatible with Android. Return lyricist as author
-    return metadataItems.first(where: { $0.identifier == AVMetadataIdentifier.id3MetadataLyricist }
+    return metadataItems.first(where: { $0.identifier == AVMetadataIdentifier.id3MetadataLyricist || $0.commonKey == AVMetadataKey.commonKeyAuthor}
     )?.stringValue
   }
 
   func getWriterName() -> String? {
-    // unimplemented
-    return nil
+      return metadataItems.first(where: { $0.identifier == AVMetadataIdentifier.id3MetadataComposer || $0.commonKey == AVMetadataKey.commonKeyCreator}
+      )?.stringValue
   }
 
   func getDiscNumber() -> String? {
