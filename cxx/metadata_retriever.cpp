@@ -24,6 +24,7 @@ static const std::map<std::string, std::wstring> kMetadataKeys = {
     {"writerName", L"WrittenBy"},
     {"trackDuration", L"Duration"},
     {"bitrate", L"OverallBitRate"},
+    {"mimeType", L"InternetMediaType"},
 };
 
 MetadataRetriever::MetadataRetriever() { Option(L"Cover_Data", L"base64"); }

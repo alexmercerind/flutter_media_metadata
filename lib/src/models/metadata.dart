@@ -88,7 +88,7 @@ class Metadata {
         trackNumber: parseInteger(map['metadata']['trackNumber']),
         albumLength: parseInteger(map['metadata']['albumLength']),
         year: parseInteger(map['metadata']['year']),
-        genre: map['genre'],
+        genre: map['metadata']['genre'],
         authorName: map['metadata']['authorName'],
         writerName: map['metadata']['writerName'],
         discNumber: parseInteger(map['metadata']['discNumber']),
