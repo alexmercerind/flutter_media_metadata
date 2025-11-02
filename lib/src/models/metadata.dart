@@ -31,6 +31,9 @@ class Metadata {
   /// Year of the track.
   final int? year;
 
+  /// Modified date of the track (exact date when data source was created or modified).
+  final String? modifiedDate;
+
   /// Genre of the track.
   final String? genre;
 
@@ -66,6 +69,7 @@ class Metadata {
     this.trackNumber,
     this.albumLength,
     this.year,
+    this.modifiedDate,
     this.genre,
     this.authorName,
     this.writerName,
@@ -88,6 +92,7 @@ class Metadata {
         trackNumber: parseInteger(map['metadata']['trackNumber']),
         albumLength: parseInteger(map['metadata']['albumLength']),
         year: parseInteger(map['metadata']['year']),
+        modifiedDate: map['metadata']['modifiedDate'],
         genre: map['genre'],
         authorName: map['metadata']['authorName'],
         writerName: map['metadata']['writerName'],
@@ -107,6 +112,7 @@ class Metadata {
         'trackNumber': trackNumber,
         'albumLength': albumLength,
         'year': year,
+        'modifiedDate': modifiedDate,
         'genre': genre,
         'authorName': authorName,
         'writerName': writerName,

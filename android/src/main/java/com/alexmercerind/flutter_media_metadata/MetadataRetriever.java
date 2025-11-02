@@ -36,6 +36,7 @@ public class MetadataRetriever extends MediaMetadataRetriever {
         metadata.put("year", null);
       }
     }
+    metadata.put("modifiedDate", date);
     metadata.put("genre", extractMetadata(METADATA_KEY_GENRE));
     metadata.put("authorName", extractMetadata(METADATA_KEY_AUTHOR));
     metadata.put("writerName", extractMetadata(METADATA_KEY_WRITER));

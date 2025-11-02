@@ -39,7 +39,11 @@ public class FlutterMediaMetadataPlugin implements FlutterPlugin, MethodCallHand
           final HashMap<String, Object> response = new HashMap<String, Object>();
           response.put("metadata", retriever.getMetadata());
           response.put("albumArt", retriever.getAlbumArt());
-          retriever.release();
+          try {
+            retriever.release();
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
           new Handler(Looper.getMainLooper())
               .post(new Runnable() {
                 @Override

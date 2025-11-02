@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath 'com.android.tools.build:gradle:8.3.0'
     }
 }
 
@@ -22,7 +22,8 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 32
+    namespace 'com.alexmercerind.flutter_media_metadata'
+    compileSdkVersion 34
 
     defaultConfig {
         minSdkVersion 16
